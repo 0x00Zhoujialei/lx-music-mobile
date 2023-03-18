@@ -10,6 +10,7 @@ import {
 } from './screenNames'
 
 import { getter, getStore } from '@/store'
+import {Colors} from "react-native/Libraries/NewAppScreen";
 
 const store = getStore()
 const getTheme = () => getter('common', 'theme')(store.getState())
@@ -73,7 +74,8 @@ export function pushHomeScreen() {
                 backgroundColor: theme.primary,
               },
               layout: {
-                componentBackgroundColor: theme.primary,
+                componentBackgroundColor: Colors.white,
+                backgroundColor: Colors.white,
               },
             },
           },

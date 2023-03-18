@@ -21,6 +21,7 @@ const init = callback => {
       },
     },
   })
+
   unRegisterEvent = Navigation.events().registerScreenPoppedListener(({ componentId }) => {
     const store = getStore()
     store.dispatch(commonAction.removeComponentId(componentId))

@@ -42,7 +42,7 @@ export default (props) => {
     setComponentId({ name: 'home', id: props.componentId })
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
+  console.log('render home')
   return (
     window.height > window.width
       ? <>

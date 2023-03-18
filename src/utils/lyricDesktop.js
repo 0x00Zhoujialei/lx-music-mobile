@@ -122,6 +122,7 @@ export const setLyric = (lyric, translation, romalrc) => {
  */
 export const toggleTranslation = isShowTranslation => {
   // if (!isShowLyric) return Promise.resolve()
+  // TODO: ios native implementation needed
   return LyricModule.toggleTranslation(isShowTranslation)
 }
 

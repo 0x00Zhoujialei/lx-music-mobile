@@ -41,6 +41,7 @@ const init = () => {
     initLyric(),
     registerPlaybackService(),
   ]).then(() => {
+    console.log('finish promise all')
     let setting = store.getState().common.setting
 
     if (getIsSupportedAutoTheme()) {
@@ -49,6 +50,7 @@ const init = () => {
       })
     }
 
+    console.log('before translation')
     toggleTranslation(setting.player.isShowLyricTranslation)
     toggleRoma(setting.player.isShowLyricRoma)
     if (setting.sync.enable) {
@@ -76,6 +78,7 @@ const init = () => {
         store.dispatch(commonAction.setIsShowDesktopLyric(false))
       })
     }
+    console.log('before change')
     onPositionChange(position => {
       store.dispatch(commonAction.setDesktopLyricPosition(position))
     })
@@ -139,7 +142,9 @@ initNavigation(() => {
   init().then(() => {
     if (getIsSupportedAutoTheme()) store.dispatch(commonAction.setSystemColor(getAppearance()))
 
+    console.log('start push home screen')
     return navigations.pushHomeScreen().then(() => {
+      console.log('home screen push success')
       SplashScreen.hide()
       if (store.getState().common.setting.isAgreePact) {
         if (isFirstRun) {

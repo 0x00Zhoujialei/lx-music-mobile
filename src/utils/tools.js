@@ -68,6 +68,7 @@ export const getWindowSise = windowDimensions => {
  * @param {String} position 位置，可用值：top、center、bottom
  */
 export const toast = (message, duration = 'short', position = 'bottom') => {
+  if (Platform.OS !== 'android') { return }
   switch (duration) {
     case 'long':
       duration = ToastAndroid.LONG
