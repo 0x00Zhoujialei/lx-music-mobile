@@ -1,5 +1,4 @@
-import { NativeModules, NativeEventEmitter } from 'react-native'
-
+import {NativeModules, NativeEventEmitter, Platform} from 'react-native'
 const { LyricModule } = NativeModules
 
 let isShowLyric = false
@@ -54,6 +53,7 @@ export const showLyric = ({
   textPositionX,
   textPositionY,
 }) => {
+  if (Platform.OS !== 'android') return
   if (isShowLyric) return Promise.resolve()
   return LyricModule.showLyric({
     isSingleLine,
@@ -122,7 +122,8 @@ export const setLyric = (lyric, translation, romalrc) => {
  */
 export const toggleTranslation = isShowTranslation => {
   // if (!isShowLyric) return Promise.resolve()
-  // TODO: ios native implementation needed
+  // ios simplely skip to show these sort of things
+  if (Platform.OS !== 'android') return
   return LyricModule.toggleTranslation(isShowTranslation)
 }
 
@@ -133,6 +134,7 @@ export const toggleTranslation = isShowTranslation => {
  */
 export const toggleRoma = isShowRoma => {
   // if (!isShowLyric) return Promise.resolve()
+  if (Platform.OS !== 'android') return
   return LyricModule.toggleRoma(isShowRoma)
 }
 
@@ -142,6 +144,7 @@ export const toggleRoma = isShowRoma => {
  * @returns {Promise} Promise
  */
 export const toggleLock = isLock => {
+  if (Platform.OS !== 'android') return
   if (!isShowLyric) return Promise.resolve()
   return LyricModule.toggleLock(isLock)
 }
@@ -152,6 +155,7 @@ export const toggleLock = isLock => {
  * @returns {Promise} Promise
  */
 export const setTheme = themeId => {
+  if (Platform.OS !== 'android') return
   if (!isShowLyric) return Promise.resolve()
   return LyricModule.setColor(getThemeColor(themeId))
 }
@@ -162,6 +166,7 @@ export const setTheme = themeId => {
  * @returns {Promise} Promise
  */
 export const setAlpha = alpha => {
+  if (Platform.OS !== 'android') return
   if (!isShowLyric) return Promise.resolve()
   return LyricModule.setAlpha(getAlpha(alpha))
 }
@@ -172,54 +177,65 @@ export const setAlpha = alpha => {
  * @returns {Promise} Promise
  */
 export const setTextSize = size => {
+  if (Platform.OS !== 'android') return
   if (!isShowLyric) return Promise.resolve()
   return LyricModule.setTextSize(getTextSize(size))
 }
 
 export const setShowToggleAnima = isShowToggleAnima => {
+  if (Platform.OS !== 'android') return
   if (!isShowLyric) return Promise.resolve()
   return LyricModule.setShowToggleAnima(isShowToggleAnima)
 }
 
 export const setSingleLine = isSingleLine => {
+  if (Platform.OS !== 'android') return
   if (!isShowLyric) return Promise.resolve()
   return LyricModule.setSingleLine(isSingleLine)
 }
 
 export const setPosition = (x, y) => {
+  if (Platform.OS !== 'android') return
   if (!isShowLyric) return Promise.resolve()
   return LyricModule.setPosition(x, y)
 }
 
 export const setMaxLineNum = maxLineNum => {
+  if (Platform.OS !== 'android') return
   if (!isShowLyric) return Promise.resolve()
   return LyricModule.setMaxLineNum(maxLineNum)
 }
 
 export const setWidth = width => {
+  if (Platform.OS !== 'android') return
   if (!isShowLyric) return Promise.resolve()
   return LyricModule.setWidth(width)
 }
 
 export const fixViewPosition = () => {
+  if (Platform.OS !== 'android') return
   if (!isShowLyric) return Promise.resolve()
   return LyricModule.fixViewPosition()
 }
 
 export const setLyricTextPosition = (textX, textY) => {
+  if (Platform.OS !== 'android') return
   if (!isShowLyric) return Promise.resolve()
   return LyricModule.setLyricTextPosition(getTextPositionX(textX), getTextPositionY(textY))
 }
 
 export const checkOverlayPermission = () => {
+  if (Platform.OS !== 'android') return
   return LyricModule.checkOverlayPermission()
 }
 
 export const openOverlayPermissionActivity = () => {
+  if (Platform.OS !== 'android') return
   return LyricModule.openOverlayPermissionActivity()
 }
 
 export const onPositionChange = callback => {
+  if (Platform.OS !== 'android') return
   const eventEmitter = new NativeEventEmitter(LyricModule)
   const eventListener = eventEmitter.addListener('set-position', event => {
     callback(event)

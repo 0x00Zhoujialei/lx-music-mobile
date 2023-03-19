@@ -15,6 +15,7 @@ const HeaderItem = ({ info, index, onPress }) => {
   const theme = useGetter('common', 'theme')
   const isActive = useActive(index)
   // console.log(theme)
+  console.log(info.icon)
   const components = useMemo(() => (
     <TouchableOpacity style={styles.btn} onPress={() => !isActive && onPress(index)}>
       <Icon name={info.icon} style={{ ...styles.icon, color: isActive ? theme.secondary : theme.normal10 }} size={18} />
@@ -32,7 +33,7 @@ const Header = ({ componentId }) => {
   const menus = useGetter('common', 'navMenus')
   const setNavActiveIndex = useDispatch('common', 'setNavActiveIndex')
   const theme = useGetter('common', 'theme')
-
+  console.log(menus)
   return (
     <View style={{ ...styles.header, backgroundColor: theme.primary }}>
       <StatusBar />

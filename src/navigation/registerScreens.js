@@ -23,14 +23,17 @@ import {
 } from './screenNames'
 import VersionModal from './components/VersionModal'
 import PactModal from './components/PactModal'
+import {SafeAreaView} from "react-native";
 
 function WrappedComponent(Component) {
   return function inject(props) {
     const EnhancedComponent = () => (
       <Provider>
-        <Component
-          {...props}
-        />
+        <SafeAreaView style={{ flex: 1 }}>
+          <Component
+            {...props}
+          />
+        </SafeAreaView>
       </Provider>
     )
 

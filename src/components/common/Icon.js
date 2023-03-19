@@ -1,5 +1,6 @@
 import { createIconSetFromIcoMoon } from 'react-native-vector-icons'
 import icoMoonConfig from '@/resources/fonts/selection.json'
+import {Platform} from "react-native";
 
 // import IconAntDesign from 'react-native-vector-icons/AntDesign'
 // import IconEntypo from 'react-native-vector-icons/Entypo'
@@ -16,9 +17,13 @@ import icoMoonConfig from '@/resources/fonts/selection.json'
 // import IconZocial from 'react-native-vector-icons/Zocial'
 // import IconSimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 
-
-const Icon = createIconSetFromIcoMoon(icoMoonConfig)
-
+let Icon
+if (Platform.OS === 'android') {
+  Icon = createIconSetFromIcoMoon(icoMoonConfig)
+} else {
+  Icon = createIconSetFromIcoMoon(icoMoonConfig)
+}
+Icon.loadFont().catch((error) => { console.log('tt', error) })
 // https://oblador.github.io/react-native-vector-icons/
 
 export {
