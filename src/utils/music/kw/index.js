@@ -60,6 +60,7 @@ const kw = {
   },
 
   getMusicUrl(songInfo, type) {
+    console.log(apis('kw'))
     return apis('kw').getMusicUrl(songInfo, type)
   },
 

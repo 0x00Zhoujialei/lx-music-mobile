@@ -15,6 +15,7 @@
 		1654114429C63A6C007079EA /* dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1654114329C63A6C007079EA /* dummy.swift */; };
 		1654114929C70548007079EA /* RCTLyricModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 1654114829C70548007079EA /* RCTLyricModule.m */; };
 		1655A1D929C7883D00D96276 /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1655A1D829C7883D00D96276 /* icomoon.ttf */; };
+		1655A1DD29C8310600D96276 /* RCTUtilsModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 1655A1DC29C8310600D96276 /* RCTUtilsModule.m */; };
 		7699B88040F8A987B510C191 /* libPods-LxMusicMobile-LxMusicMobileTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-LxMusicMobile-LxMusicMobileTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
@@ -44,6 +45,8 @@
 		1654114729C70548007079EA /* RCTLyricModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTLyricModule.h; sourceTree = "<group>"; };
 		1654114829C70548007079EA /* RCTLyricModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCTLyricModule.m; sourceTree = "<group>"; };
 		1655A1D829C7883D00D96276 /* icomoon.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = icomoon.ttf; sourceTree = "<group>"; };
+		1655A1DB29C8310600D96276 /* RCTUtilsModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTUtilsModule.h; sourceTree = "<group>"; };
+		1655A1DC29C8310600D96276 /* RCTUtilsModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCTUtilsModule.m; sourceTree = "<group>"; };
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-LxMusicMobile-LxMusicMobileTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LxMusicMobile-LxMusicMobileTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B4392A12AC88292D35C810B /* Pods-LxMusicMobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LxMusicMobile.debug.xcconfig"; path = "Target Support Files/Pods-LxMusicMobile/Pods-LxMusicMobile.debug.xcconfig"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-LxMusicMobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LxMusicMobile.release.xcconfig"; path = "Target Support Files/Pods-LxMusicMobile/Pods-LxMusicMobile.release.xcconfig"; sourceTree = "<group>"; };
@@ -111,6 +114,7 @@
 		1654114529C70301007079EA /* modules */ = {
 			isa = PBXGroup;
 			children = (
+				1655A1DA29C830EF00D96276 /* utils */,
 				1654114629C70332007079EA /* lyric */,
 			);
 			name = modules;
@@ -140,6 +144,15 @@
 				1655A1D829C7883D00D96276 /* icomoon.ttf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		1655A1DA29C830EF00D96276 /* utils */ = {
+			isa = PBXGroup;
+			children = (
+				1655A1DB29C8310600D96276 /* RCTUtilsModule.h */,
+				1655A1DC29C8310600D96276 /* RCTUtilsModule.m */,
+			);
+			name = utils;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
@@ -461,6 +474,7 @@
 				1654114929C70548007079EA /* RCTLyricModule.m in Sources */,
 				1654114429C63A6C007079EA /* dummy.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				1655A1DD29C8310600D96276 /* RCTUtilsModule.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

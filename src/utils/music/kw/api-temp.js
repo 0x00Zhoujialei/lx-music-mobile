@@ -3,6 +3,9 @@ import { headers, timeout } from '../options'
 
 const api_temp = {
   getMusicUrl(songInfo, type) {
+    console.log('------- api_temp')
+    console.log('------- headers', headers)
+    console.log('------- url', `http://tm.tempmusics.tk/url/kw/${songInfo.songmid}/${type}`)
     const requestObj = httpFetch(`http://tm.tempmusics.tk/url/kw/${songInfo.songmid}/${type}`, {
       method: 'get',
       headers,
@@ -10,6 +13,7 @@ const api_temp = {
       family: 4,
     })
     requestObj.promise = requestObj.promise.then(({ body }) => {
+      console.log(body)
       return body.code === 0 ? Promise.resolve({ type, url: body.data }) : Promise.reject(new Error(body.msg))
     })
     return requestObj

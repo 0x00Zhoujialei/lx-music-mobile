@@ -45,6 +45,8 @@ export const buildTracks = ({ musicInfo, type, url, duration }) => {
 }
 export const buildTrack = ({ musicInfo, type, url, duration }) => {
   const isShowNotificationImage = store.getState().common.setting.player.isShowNotificationImage
+  console.log('---------- url', url)
+  console.log('---------- defaultUrl', defaultUrl)
   return url
     ? {
         id: `${musicInfo.source}__//${musicInfo.songmid}__//${type}__//${Math.random()}__//${url}`,
@@ -89,6 +91,7 @@ export const playMusic = async(tracks, time) => {
   // console.log(tracks, time)
   const track = tracks[0]
   // await updateMusicInfo(track)
+  console.log('--------', track)
   const currentTrackIndex = await TrackPlayer.getCurrentTrack()
   await TrackPlayer.add(tracks).then(() => list.push(...tracks))
   const queue = await TrackPlayer.getQueue()

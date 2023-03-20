@@ -47,6 +47,7 @@ export const getToken = (retryNum = 0) => new Promise((resolve, reject) => {
   if (kw_token.token) return resolve(kw_token.token)
   kw_token.isGetingToken = true
   httpGet('http://www.kuwo.cn/', (err, resp) => {
+    console.log('http://www.kuwo.cn', err, resp)
     kw_token.isGetingToken = false
     if (err) return getToken(++retryNum)
     if (resp.statusCode != 200) return reject(new Error('获取失败'))

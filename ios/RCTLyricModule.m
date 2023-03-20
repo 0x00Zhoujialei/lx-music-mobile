@@ -18,4 +18,5 @@ RCT_EXPORT_METHOD(toggleTranslation:(BOOL)isShowTranslation)
   
 }
 
+
 @end

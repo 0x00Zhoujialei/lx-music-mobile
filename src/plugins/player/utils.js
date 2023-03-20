@@ -101,6 +101,7 @@ export const isTempId = (trackId = global.playerTrackId) => tempIdRxp.test(track
 // }
 
 export const playMusic = ((fn, delay = 800) => {
+  console.log('start play music')
   let delayTimer = null
   let isDelayRun = false
   let timer = null

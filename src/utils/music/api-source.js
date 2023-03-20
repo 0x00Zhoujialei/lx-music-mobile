@@ -45,6 +45,7 @@ const getAPI = source => apiList[`${global.globalObj.apiSource}_api_${source}`]
 
 const apis = source => {
   const api = getAPI(source)
+  console.log('--------- api', api, 'source ', source, 'apiSource ', global.globalObj.apiSource)
   if (api) return api
   throw new Error('Api is not found')
 }

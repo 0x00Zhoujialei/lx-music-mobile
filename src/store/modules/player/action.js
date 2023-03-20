@@ -122,30 +122,38 @@ const handlePlayMusic = async({ getState, dispatch, playMusicInfo, musicInfo, is
   //   return
   // }
 
+  console.log('-------- musicInfo', musicInfo)
   const type = getPlayType(state, musicInfo)
   if (timeout) {
     clearTimeout(timeout)
     timeout = null
   }
   // setLyric('')
+  console.log(musicInfo)
   console.log('Handle Play Music ====================>', musicInfo.name)
   global.playInfo.currentPlayMusicInfo = _playMusicInfo = musicInfo
   let id = `${musicInfo.source}//${musicInfo.songmid}//${type}`
   playMusicId = id
 
   global.playInfo.isPlaying = false
+  console.log('------- global.restorePlayInfo', global.restorePlayInfo)
   if (global.restorePlayInfo) {
     const track = buildTrack({ musicInfo, type })
+    console.log('------', track)
     delayUpdateMusicInfo(track)
     track.id += track.id + '//restorePlay'
     playMusicId = playMusicId + '//restorePlay'
+    console.log('before msPlayMusic')
     msPlayMusic([track])
+    console.log('after msPlayMusic')
     if (!isRefresh && state.common.setting.player.togglePlayMethod == 'random') dispatch({ type: TYPES.addMusicToPlayedList, payload: playMusicInfo })
 
     // console.log(musicInfo.img)
+    console.log('------- musicInfo.img', musicInfo.img)
     if (!musicInfo.img) {
       dispatch(getPic(musicInfo)).then(async() => {
         const musicUrl = await getMusicUrl(musicInfo, type)
+        console.log('-------- 156 musicUrl ', musicUrl)
         if (playMusicId != id) return
         if (musicUrl && state.common.setting.player.isShowNotificationImage) {
         // console.log('+++updateMusicInfo+++')
@@ -168,6 +176,7 @@ const handlePlayMusic = async({ getState, dispatch, playMusicInfo, musicInfo, is
     return
   }
 
+  console.log('176')
   dispatch(setGetingUrlState(true))
   dispatch(setStatus({
     status: STATUS.gettingUrl,
@@ -178,7 +187,8 @@ const handlePlayMusic = async({ getState, dispatch, playMusicInfo, musicInfo, is
     dispatch(getUrl({ musicInfo, type, isRefresh })),
     resetPlay(),
   ]).then(([url]) => {
-    // console.log('url get done', getState().player.status)
+    console.log('url get done', getState().player.status)
+    console.log('------ url get done after url', url)
     if (playMusicId != id) return
     switch (getState().player.status) {
       case STATUS.stop:
@@ -187,6 +197,7 @@ const handlePlayMusic = async({ getState, dispatch, playMusicInfo, musicInfo, is
     }
     msPlayMusic(buildTracks({ musicInfo, type, url }), time)
   }).catch(err => {
+    console.log(err)
     if (playMusicId != id) return
     dispatch(setStatus({ status: STATUS.error, text: err.message }))
     if (AppState.currentState == 'active') {
@@ -200,6 +211,7 @@ const handlePlayMusic = async({ getState, dispatch, playMusicInfo, musicInfo, is
       dispatch(playNext())
     }
   }).finally(() => {
+    console.log('get all finally')
     if (playMusicId != id) return
     if (getState().player.isGettingUrl) dispatch(setGetingUrlState(false))
     // console.log('set url getting done')
@@ -332,20 +344,24 @@ export const setStatus = ({ status, text }) => {
 
 
 const handleGetUrl = function(dispatch, listId, musicInfo, type, retryedSource = [], originMusic) {
-  // console.log(musicInfo.source)
+  console.log("-----", music, musicInfo, musicInfo.source)
   if (!originMusic) originMusic = musicInfo
   let reqPromise
   try {
+    console.log('-------- handleGetUrl', music[musicInfo.source])
     reqPromise = music[musicInfo.source].getMusicUrl(musicInfo, type).promise
   } catch (err) {
     reqPromise = Promise.reject(err)
   }
   return reqPromise.catch(err => {
+    console.log('------- reqPromise catch err', err)
     if (!retryedSource.includes(musicInfo.source)) retryedSource.push(musicInfo.source)
     return dispatch(listAction.getOtherSource({ musicInfo: originMusic, listId })).then(otherSource => {
       console.log('find otherSource', otherSource.map(s => s.source))
+      console.log('------ retryed source', retryedSource)
       if (otherSource.length) {
         for (const item of otherSource) {
+          console.log('------ item source', item.source, assertApiSupport(item.source))
           if (retryedSource.includes(item.source) || !assertApiSupport(item.source)) continue
           console.log('try toggle to: ', item.source, item.name, item.singer, item.interval)
           return handleGetUrl(dispatch, listId, item, type, retryedSource, originMusic)
@@ -405,11 +421,12 @@ const handleGetLyric = function(dispatch, listId, musicInfo, retryedSource = [],
 
 export const getUrl = ({ musicInfo, type, isRefresh }) => async(dispatch, getState) => {
   const cachedUrl = await getMusicUrl(musicInfo, type)
+  console.log('-------- cachedUrl', cachedUrl)
   if (cachedUrl && !isRefresh) return cachedUrl
 
   dispatch(setStatus({
     status: STATUS.gettingUrl,
-    text: isRefresh ? 'URL刷新中...' : 'URL获取中...',
+    text: isRefresh ? 'URL刷新中...' : 'UnRL获取中...',
   }))
 
   return handleGetUrl(dispatch, getState().player.listInfo.id, musicInfo, type).then(result => {
@@ -417,12 +434,14 @@ export const getUrl = ({ musicInfo, type, isRefresh }) => async(dispatch, getSta
     // console.log('get' + musicInfo.name + ' url success: ' + result.url)
     return result.url
   }).catch(err => {
+    console.log(err)
     console.log('get' + musicInfo.name + ' url fail: ' + err.message)
     return Promise.reject(err)
   })
 }
 
 export const refreshMusicUrl = (musicInfo, restorePlayTime) => (dispatch, getState) => {
+  console.log('-------- refreshMusicUrl')
   const state = getState()
   const targetMusic = state.player.listInfo.list.find(s => s.songmid == musicInfo.songmid)
   if (!targetMusic) {
@@ -444,6 +463,8 @@ export const refreshMusicUrl = (musicInfo, restorePlayTime) => (dispatch, getSta
 
 export const playMusic = playMusicInfo => async(dispatch, getState) => {
   // console.log(playMusicInfo)
+  console.log('------- playMusic')
+  console.log('------- playMusicInfo', playMusicInfo)
   const { player, common } = getState()
 
   if (!isInitialized()) {
@@ -521,11 +542,13 @@ export const setProgress = time => async(dispatch, getState) => {
 export const getPic = musicInfo => (dispatch, getState) => {
   return handleGetPic(dispatch, getState().player.listInfo.id, musicInfo).then(url => {
     // picRequest = null
+    console.log('-------- get pic success')
     dispatch({ type: TYPES.setPic, payload: { musicInfo, url } })
     const state = getState()
     if (state.player.listInfo.id) saveList(global.allList[state.player.listInfo.id])
   }).catch(err => {
     // picRequest = null
+    console.log('-------- get pic error', err)
     return Promise.reject(err)
   })
 }
